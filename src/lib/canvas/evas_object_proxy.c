@@ -98,6 +98,14 @@ static const Evas_Object_Func object_func =
 };
 
 
+/**
+ * Add a new proxy object.
+ *
+ * The proxy object must have a source set before it is useful.
+ *
+ * @param e Evas canvas to add proxy too.
+ * @return New proxy object.
+ */
 EAPI Evas_Object *
 evas_object_proxy_add(Evas *e)
 {
@@ -119,6 +127,18 @@ evas_object_proxy_add(Evas *e)
    return obj;
 }
 
+/**
+ * Set the source object on a proxy object.
+ *
+ * Any existing source object will be removed.  Setting the src to NULL clears
+ * the proxy object.
+ *
+ * You cannot set a proxy on a proxy.
+ *
+ * @param obj Proxy object.
+ * @param src Source of the proxy.
+ * @return EINA_TRUE on success, EINA_FALSE on error.
+ */
 EAPI Eina_Bool
 evas_object_proxy_source_set(Evas_Object *obj, Evas_Object *src)
 {
@@ -159,6 +179,12 @@ evas_object_proxy_source_set(Evas_Object *obj, Evas_Object *src)
    return EINA_TRUE;
 }
 
+/**
+ * Get the current source object of a proxy.
+ *
+ * @param obj Proxy object
+ * @return Source object, or NULL on error.
+ */
 EAPI Evas_Object *
 evas_object_proxy_source_get(Evas_Object *obj)
 {
@@ -175,12 +201,20 @@ evas_object_proxy_source_get(Evas_Object *obj)
    return o->source;
 }
 
+/**
+ * Clear the source on a proxy.
+ *
+ * This is equivalent to calling evas_object_proxy_source_set with a NULL
+ * source.
+ *
+ * @param obj Proxy object to clear source of.
+ * @return EINA_TRUE on success, EINA_FALSE on error.
+ */
 EAPI Eina_Bool
-evas_object_proxy_source_unset(Evas_Object *o)
+evas_object_proxy_source_unset(Evas_Object *obj)
 {
-   return evas_object_proxy_source_set(o, NULL);
+   return evas_object_proxy_source_set(obj, NULL);
 }
-
 
 
 

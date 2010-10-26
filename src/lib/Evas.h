@@ -2085,7 +2085,13 @@ struct _Evas_Smart_Cb_Description
 /**
  * @defgroup Evas_Proxy Evas Proxy Objects
  *
- * Provides a way of applying effects to complete objects.
+ * @brief Provides a way of applying effects to complete objects.
+ *
+ * A proxy object is a visible copy of another object.  Generally a map or
+ * similar effect will be applied to the proxy to apply some sort of rendering
+ * effect to.
+ * 
+ * Proxies are generally used for special effects.
  */
    EAPI Evas_Object                         *evas_object_proxy_add            (Evas *e) EINA_MALLOC;
    EAPI Eina_Bool                            evas_object_proxy_source_set     (Evas_Object *o, Evas_Object *source);
