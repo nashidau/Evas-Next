@@ -2,8 +2,8 @@
 #include "evas_private.h"
 
 // debug rendering
-#define REND_DGB 1
-#define STDOUT_DBG 1
+//#define REND_DGB 1
+//#define STDOUT_DBG 1
 
 #ifdef REND_DGB
 static FILE *dbf = NULL;
@@ -686,7 +686,7 @@ evas_render_mapped(Evas *e, Evas_Object *obj, void *context, void *surface,
         pts[0].z0 = obj->cur.map->persp.z0 << FP;
         
         p = obj->cur.map->points;
-        p_end = p + 4;
+        p_end = p + obj->cur.map->count;
         pt = pts;
         for (; p < p_end; p++, pt++)
           {
@@ -699,6 +699,12 @@ evas_render_mapped(Evas *e, Evas_Object *obj, void *context, void *surface,
              pt->v = p->v * FP1;
              pt->col = ARGB_JOIN(p->a, p->r, p->g, p->b);
           }
+        /* Copy last for software engine */
+        if (obj->cur.map->count & 0x1)
+          {
+            pts[obj->cur.map->count] = pts[obj->cur.map->count - 1];
+          }
+
 
         if (obj->cur.map->surface)
           {

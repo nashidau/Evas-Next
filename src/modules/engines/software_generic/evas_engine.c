@@ -511,7 +511,9 @@ eng_image_map_draw(void *data __UNUSED__, void *context, void *surface, void *im
    RGBA_Image *im;
 
    if (!image) return;
+   if (npoints < 3) return;
    im = image;
+
    if ((p[0].x == p[3].x) &&
        (p[1].x == p[2].x) &&
        (p[0].y == p[1].y) &&
@@ -556,6 +558,12 @@ eng_image_map_draw(void *data __UNUSED__, void *context, void *surface, void *im
           evas_common_map_rgba(im, surface, context, npoints, p, smooth, level);
      }
    evas_common_cpu_end_opt();
+
+   if (npoints > 4)
+     {
+        eng_image_map_draw(data, context, surface, image, npoints - 2, p + 2,
+			smooth, level);
+     }
 }
 
 static void *

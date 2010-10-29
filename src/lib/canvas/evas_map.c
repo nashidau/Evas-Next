@@ -96,7 +96,15 @@ static inline Evas_Map *
 _evas_map_new(int count)
 {
    int i;
-   Evas_Map *m = calloc(1, sizeof(Evas_Map) + (count * sizeof(Evas_Map_Point)));
+   int alloc;
+   Evas_Map *m;
+
+   /* Adjust allocation such that: at least 4 points, and always an even
+    * number: this allows the software engine to work efficiently */
+   alloc = (count < 4) ? 4 : count;
+   if (alloc & 0x1) alloc ++;
+
+   m = calloc(1, sizeof(Evas_Map) + (alloc * sizeof(Evas_Map_Point)));
    if (!m) return NULL;
    m->count = count;
    m->persp.foc = 0;

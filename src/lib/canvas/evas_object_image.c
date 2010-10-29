@@ -2467,6 +2467,11 @@ evas_object_image_render(Evas_Object *obj, void *output, void *context, void *su
                   pt->v = p->v * FP1;
                   pt->col = ARGB_JOIN(p->a, p->r, p->g, p->b);
               }
+	     if (obj->cur.map->count & 0x1)
+	       {
+		  pts[obj->cur.map->count] = pts[obj->cur.map->count -1];
+	       }
+
              obj->layer->evas->engine.func->image_map_draw
                (output, context, surface, o->engine_data, obj->cur.map->count,
 		pts, o->cur.smooth_scale | obj->cur.map->smooth, 0);
