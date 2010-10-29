@@ -2442,13 +2442,13 @@ evas_object_image_render(Evas_Object *obj, void *output, void *context, void *su
 	       }
 	     o->dirty_pixels = 0;
 	  }
-        if ((obj->cur.map) && (obj->cur.map->count == 4) && (obj->cur.usemap))
+        if ((obj->cur.map) && (obj->cur.map->count > 3) && (obj->cur.usemap))
           {
 	     const Evas_Map_Point *p, *p_end;
-             RGBA_Map_Point pts[4], *pt;
+             RGBA_Map_Point pts[obj->cur.map->count], *pt;
 
 	     p = obj->cur.map->points;
-	     p_end = p + 4;
+	     p_end = p + obj->cur.map->count;
 	     pt = pts;
              
              pts[0].px = obj->cur.map->persp.px << FP;
@@ -2467,9 +2467,9 @@ evas_object_image_render(Evas_Object *obj, void *output, void *context, void *su
                   pt->v = p->v * FP1;
                   pt->col = ARGB_JOIN(p->a, p->r, p->g, p->b);
               }
-             obj->layer->evas->engine.func->image_map4_draw
-               (output, context, surface, o->engine_data, pts,
-                o->cur.smooth_scale | obj->cur.map->smooth, 0);
+             obj->layer->evas->engine.func->image_map_draw
+               (output, context, surface, o->engine_data, obj->cur.map->count,
+		pts, o->cur.smooth_scale | obj->cur.map->smooth, 0);
           }
         else
           {

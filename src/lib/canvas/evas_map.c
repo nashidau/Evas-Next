@@ -160,7 +160,7 @@ evas_map_coords_get(const Evas_Map *m, Evas_Coord x, Evas_Coord y,
    double u[2] = { 0.0, 0.0 };
    double v[2] = { 0.0, 0.0 };
 
-   if (m->count != 4) return 0;
+   if (m->count < 4) return 0;
    // FIXME need to handle grab mode and extrapolte coords outside
    // map
    if (grab)
@@ -471,19 +471,21 @@ evas_object_map_set(Evas_Object *obj, const Evas_Map *map)
           }
         return;
      }
-   if (!obj->cur.map)
+
+   if (obj->cur.map && obj->cur.map->count == map->count)
      {
-        obj->cur.map = _evas_map_dup(map);
-        if (obj->cur.usemap)
-           evas_object_mapped_clip_across_mark(obj);
+        Evas_Map *omap = obj->cur.map;
+        obj->cur.map = _evas_map_new(map->count);
+        memcpy(obj->cur.map, omap, sizeof(Evas_Map) + (map->count * sizeof(Evas_Map_Point)));
+        _evas_map_copy(obj->cur.map, map);
+        free(omap);
      }
    else
      {
-        Evas_Map *omap = obj->cur.map;
-        obj->cur.map = _evas_map_new(4);
-        memcpy(obj->cur.map, omap, sizeof(Evas_Map) + (4 * sizeof(Evas_Map_Point)));
-        _evas_map_copy(obj->cur.map, map);
-        free(omap);
+	if (obj->cur.map) evas_map_free(obj->cur.map);
+        obj->cur.map = _evas_map_dup(map);
+        if (obj->cur.usemap)
+           evas_object_mapped_clip_across_mark(obj);
      }
    _evas_map_calc_map_geometry(obj);
 }
@@ -542,9 +544,9 @@ evas_object_map_get(const Evas_Object *obj)
 EAPI Evas_Map *
 evas_map_new(int count)
 {
-   if (count != 4)
+   if (count < 4)
      {
-	ERR("num (%i) != 4 is unsupported!", count);
+	ERR("num (%i) < 4 is unsupported!", count);
 	return NULL;
      }
    return _evas_map_new(count);

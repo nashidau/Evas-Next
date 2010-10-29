@@ -2,8 +2,8 @@
 #include "evas_private.h"
 
 // debug rendering
-//#define REND_DGB 1
-//#define STDOUT_DBG 1
+#define REND_DGB 1
+#define STDOUT_DBG 1
 
 #ifdef REND_DGB
 static FILE *dbf = NULL;
@@ -656,7 +656,10 @@ evas_render_mapped(Evas *e, Evas_Object *obj, void *context, void *surface,
 
    // set render_pre - for child objs that may not have gotten it.
    obj->pre_render_done = 1;
-
+   RD("          Hasmap: %p (%d) %p %d -> %d\n",obj->func->can_map,
+                  obj->func->can_map ? obj->func->can_map(obj): -1,
+                  obj->cur.map, obj->cur.usemap,
+                  _evas_render_has_map(obj));
    if (_evas_render_has_map(obj))
      {
         const Evas_Map_Point *p, *p_end;
@@ -871,9 +874,10 @@ evas_render_mapped(Evas *e, Evas_Object *obj, void *context, void *surface,
                }
           }
         if (obj->cur.cache.clip.visible)
-           obj->layer->evas->engine.func->image_map4_draw
+           obj->layer->evas->engine.func->image_map_draw
            (e->engine.data.output, e->engine.data.context, surface,
-            obj->cur.map->surface, pts, obj->cur.map->smooth, 0);
+            obj->cur.map->surface, obj->cur.map->count, pts,
+            obj->cur.map->smooth, 0);
         // FIXME: needs to cache these maps and
         // keep them only rendering updates
 //        obj->layer->evas->engine.func->image_map_surface_free

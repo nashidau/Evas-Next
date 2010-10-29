@@ -506,7 +506,7 @@ eng_image_draw(void *data __UNUSED__, void *context, void *surface, void *image,
 }
 
 static void
-eng_image_map4_draw(void *data __UNUSED__, void *context, void *surface, void *image, RGBA_Map_Point *p, int smooth, int level)
+eng_image_map_draw(void *data __UNUSED__, void *context, void *surface, void *image, int npoints, RGBA_Map_Point *p, int smooth, int level)
 {
    RGBA_Image *im;
 
@@ -550,10 +550,10 @@ eng_image_map4_draw(void *data __UNUSED__, void *context, void *surface, void *i
        && evas_common_frameq_enabled()
 # endif
         )
-          evas_common_pipe_map4_draw(im, surface, context, p, smooth, level);
+          evas_common_pipe_map_draw(im, surface, context, npoints, p, smooth, level);
         else
 #endif
-          evas_common_map4_rgba(im, surface, context, p, smooth, level);
+          evas_common_map_rgba(im, surface, context, npoints, p, smooth, level);
      }
    evas_common_cpu_end_opt();
 }
@@ -886,7 +886,7 @@ static Evas_Func func =
      /* more font draw functions */
      eng_font_last_up_to_pos,
      /* FUTURE software generic calls go here (done) */
-     eng_image_map4_draw,
+     eng_image_map_draw,
      eng_image_map_surface_new,
      eng_image_map_surface_free,
      NULL, // eng_image_content_hint_set - software doesn't use it
