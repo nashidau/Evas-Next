@@ -174,13 +174,13 @@ evas_map_coords_get(const Evas_Map *m, Evas_Coord x, Evas_Coord y,
    if (grab)
      {
         Evas_Coord ymin, ymax;
-        
+
         ymin = m->points[0].y;
         ymax = m->points[0].y;
         for (i = 1; i < m->count; i++)
           {
-             if (m->points[i].y < ymin) ymin = m->points[i].y; 
-             else if (m->points[i].y > ymax) ymax = m->points[i].y; 
+             if (m->points[i].y < ymin) ymin = m->points[i].y;
+             else if (m->points[i].y > ymax) ymax = m->points[i].y;
           }
         if (y <= ymin) y = ymin + 1;
         if (y >= ymax) y = ymax - 1;
@@ -258,12 +258,12 @@ evas_map_coords_get(const Evas_Map *m, Evas_Coord x, Evas_Coord y,
         if (xe[0] > xe[1])
           {
              int ti;
-             
+
              ti = xe[0]; xe[0] = xe[1]; xe[1] = ti;
              if (douv)
                {
                   double td;
-                  
+
                   td = u[0]; u[0] = u[1]; u[1] = td;
                   td = v[0]; v[0] = v[1]; v[1] = td;
                }
@@ -272,11 +272,11 @@ evas_map_coords_get(const Evas_Map *m, Evas_Coord x, Evas_Coord y,
           {
              if (douv)
                {
-                  if (mx) 
-                    *mx = u[0] + (((x - xe[0]) * (u[1] - u[0])) / 
+                  if (mx)
+                    *mx = u[0] + (((x - xe[0]) * (u[1] - u[0])) /
                                   (xe[1] - xe[0]));
                  if (my)
-                    *my = v[0] + (((x - xe[0]) * (v[1] - v[0])) / 
+                    *my = v[0] + (((x - xe[0]) * (v[1] - v[0])) /
                                   (xe[1] - xe[0]));
                }
              return 1;
@@ -285,11 +285,11 @@ evas_map_coords_get(const Evas_Map *m, Evas_Coord x, Evas_Coord y,
           {
              if (douv)
                {
-                  if (mx) 
-                    *mx = u[0] + (((x - xe[0]) * (u[1] - u[0])) / 
+                  if (mx)
+                    *mx = u[0] + (((x - xe[0]) * (u[1] - u[0])) /
                                   (xe[1] - xe[0]));
                   if (my)
-                    *my = v[0] + (((x - xe[0]) * (v[1] - v[0])) / 
+                    *my = v[0] + (((x - xe[0]) * (v[1] - v[0])) /
                                   (xe[1] - xe[0]));
                }
              return 1;
