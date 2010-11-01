@@ -163,7 +163,7 @@ Eina_Bool
 evas_map_coords_get(const Evas_Map *m, Evas_Coord x, Evas_Coord y,
                     Evas_Coord *mx, Evas_Coord *my, int grab)
 {
-   int i, j, edges, edge[4][2], douv;
+   int i, j, edges, edge[m->count][2], douv;
    Evas_Coord xe[2];
    double u[2] = { 0.0, 0.0 };
    double v[2] = { 0.0, 0.0 };
