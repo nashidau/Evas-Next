@@ -654,6 +654,21 @@ evas_map_free(Evas_Map *m)
 }
 
 /**
+ * Get a maps size.
+ *
+ * Returns the number of points in a map.  Should be at least 4.
+ *
+ * @param m map to get size.
+ * @return -1 on error, points otherwise.
+ */
+EAPI int
+evas_map_count_get(const Evas_Map *m)
+{
+   if (!m) return -1;
+   return m->count;
+}
+
+/**
  * Change the map point's coordinate.
  * 
  * This sets the fixen point's coordinate in the map. Note that points

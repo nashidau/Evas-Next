@@ -993,6 +993,7 @@ typedef void      (*Evas_Async_Events_Put_Cb)(void *target, Evas_Callback_Type t
    EAPI Eina_Bool         evas_map_alpha_get                (const Evas_Map *m);
    EAPI Evas_Map         *evas_map_dup                      (const Evas_Map *m);
    EAPI void              evas_map_free                     (Evas_Map *m);
+   EAPI int               evas_map_count_get               (const Evas_Map *m) EINA_CONST;
    EAPI void              evas_map_point_coord_set          (Evas_Map *m, int idx, Evas_Coord x, Evas_Coord y, Evas_Coord z);
    EAPI void              evas_map_point_coord_get          (const Evas_Map *m, int idx, Evas_Coord *x, Evas_Coord *y, Evas_Coord *z);
    EAPI void              evas_map_point_image_uv_set       (Evas_Map *m, int idx, double u, double v);
