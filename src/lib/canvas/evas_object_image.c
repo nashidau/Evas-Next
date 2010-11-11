@@ -2045,6 +2045,39 @@ evas_object_image_content_hint_set(Evas_Object *obj, Evas_Image_Content_Hint hin
 }
 
 /**
+ * Enable an image to be used as an alpha mask.
+ *
+ * This will set any flags, and discard any excess image data not used as an
+ * alpha mask.
+ *
+ * Note there is little point in using a image as alpha mask unless it has an
+ * alpha channel.
+ *
+ * @param obj Object to use as an alpha mask.
+ * @param ismask Use image as alphamask, must be true.
+ */
+EAPI void
+evas_object_image_alpha_mask_set(Evas_Object *obj, Eina_Bool ismask)
+{
+   Evas_Object_Image *o;
+
+   if (!ismask) return;
+
+   MAGIC_CHECK(obj, Evas_Object, MAGIC_OBJ);
+   return;
+   MAGIC_CHECK_END();
+   o = (Evas_Object_Image *)(obj->object_data);
+   MAGIC_CHECK(o, Evas_Object_Image, MAGIC_OBJ_IMAGE);
+   return;
+   MAGIC_CHECK_END();
+
+   /* Convert to A8 if not already */
+
+   /* done */
+
+}
+
+/**
  * Get the content hint of a given image of the canvas.
  *
  * @param obj The given canvas pointer.
@@ -3245,3 +3278,5 @@ evas_object_image_filled_resize_listener(void *data __UNUSED__, Evas *e __UNUSED
    evas_object_geometry_get(obj, NULL, NULL, &w, &h);
    evas_object_image_fill_set(obj, 0, 0, w, h);
 }
+
+/* vim:set ts=8 sw=3 sts=3 expandtab cino=>5n-2f0^-2{2(0W1st0 :*/

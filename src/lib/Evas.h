@@ -162,7 +162,8 @@ typedef enum _Evas_Colorspace
    EVAS_COLORSPACE_YCBCR422P601_PL, /**< YCbCr 4:2:2 Planar, ITU.BT-601 specifications. The data poitned to is just an array of row pointer, pointing to the Y rows, then the Cb, then Cr rows */
    EVAS_COLORSPACE_YCBCR422P709_PL,/**< YCbCr 4:2:2 Planar, ITU.BT-709 specifications. The data poitned to is just an array of row pointer, pointing to the Y rows, then the Cb, then Cr rows */
    EVAS_COLORSPACE_RGB565_A5P, /**< 16bit rgb565 + Alpha plane at end - 5 bits of the 8 being used per alpha byte */
-   EVAS_COLORSPACE_GRY8 /**< 8bit grayscale */
+   EVAS_COLORSPACE_GRY8, /**< 8bit grayscale */
+   EVAS_COLORSPACE_A8, /**< 8 bit alpha mask */
 } Evas_Colorspace; /**< Colorspaces for pixel data supported by Evas */
 
 /**
@@ -1227,6 +1228,11 @@ typedef void (*Evas_Object_Intercept_Clip_Unset_Cb) (void *data, Evas_Object *ob
  * EVAS_COLORSPACE_ARGB8888 so:
  *
  * R = (r * a) / 32; G = (g * a) / 32; B = (b * a) / 32;
+ *
+ * EVAS_COLORSPACE_A8:
+ *
+ * The image is just a alpha mask (8 bit's per pixel).  This is used for alpha
+ * masking.
  *
  * @ingroup Evas_Object_Specific
  */
