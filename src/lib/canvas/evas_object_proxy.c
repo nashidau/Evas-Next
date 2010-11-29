@@ -418,7 +418,7 @@ _proxy_render(Evas_Object *obj, void *output, void *context,
              pt->col = ARGB_JOIN(p->a, p->r, p->g, p->b);
           }
         obj->layer->evas->engine.func->image_map_draw
-           (output, context, surface, pixels, obj->cur.map->count, pts,
+           (output, context, surface, pixels, map->count, pts,
             map->smooth, 0);
      }
    else
