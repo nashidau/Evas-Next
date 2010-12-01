@@ -152,19 +152,8 @@ evas_object_proxy_source_set(Evas_Object *obj, Evas_Object *src)
    return EINA_FALSE;
    MAGIC_CHECK_END();
 
+   if (src == obj) return EINA_FALSE;
    if (o->source == src) return EINA_TRUE;
-
-   if (src)
-     {
-        MAGIC_CHECK(src, Evas_Object, MAGIC_OBJ);
-        return EINA_FALSE;
-        MAGIC_CHECK_END();
-        so = src->object_data;
-        /* Stop the loop _now_ */
-        /* FIXME: Should I check for smarts that contain proxies too? */
-        if (so->magic == MAGIC_OBJ_PROXY)
-           return EINA_FALSE;
-     }
 
    if (o->source)
      {
