@@ -21,6 +21,7 @@ typedef struct _Evas_Object_Proxy
 
    Evas_Map *defmap;
    Eina_Bool mapupdate;
+   Eina_Bool rendering;
 } Evas_Object_Proxy;
 
 
@@ -142,7 +143,7 @@ evas_object_proxy_add(Evas *e)
 EAPI Eina_Bool
 evas_object_proxy_source_set(Evas_Object *obj, Evas_Object *src)
 {
-   Evas_Object_Proxy *o,*so;
+   Evas_Object_Proxy *o;
 
    MAGIC_CHECK(obj, Evas_Object, MAGIC_OBJ);
    return EINA_FALSE;
@@ -336,6 +337,30 @@ _proxy_render(Evas_Object *obj, void *output, void *context,
 
    o = obj->object_data;
 
+   if (o->rendering)
+     {
+        int r = rand() % 255;
+        int g = rand() % 255;
+        int b = rand() % 255;
+        printf("Ahh: Recursive proxies: Go away!\n");
+        obj->layer->evas->engine.func->context_color_set(output,
+                                                         context,
+                                                         r,g,b,255);
+        obj->layer->evas->engine.func->context_multiplier_unset(output,
+                                                                context);
+        obj->layer->evas->engine.func->context_render_op_set(output, context,
+                                                             obj->cur.render_op);
+        obj->layer->evas->engine.func->rectangle_draw(output,
+                                                      context,
+                                                      surface,
+                                                      obj->cur.geometry.x + x,
+                                                      obj->cur.geometry.y + y,
+                                                      obj->cur.geometry.w,
+                                                      obj->cur.geometry.h);
+        return;
+     }
+
+
    if (!o->source) return;
 
 //   ENFN->context_multiplier_unset(output, context);
@@ -354,8 +379,10 @@ _proxy_render(Evas_Object *obj, void *output, void *context,
      }
    else
      {
+         o->rendering = true;
          _proxy_subrender(obj->layer->evas, o->source);
          pixels = o->source->proxy.surface;
+         o->rendering = false;
      }
 
    if (o->mapupdate) _proxy_map_update(obj);
