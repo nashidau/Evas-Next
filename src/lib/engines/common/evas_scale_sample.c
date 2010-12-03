@@ -235,7 +235,9 @@ scale_rgba_in_to_out_clip_sample_internal(RGBA_Image *src, RGBA_Image *dst,
    /* figure out dest start ptr */
    dst_ptr = dst_data + dst_clip_x + (dst_clip_y * dst_w);
 
-   if (dc->mul.use)
+   if (dc->mask.mask)
+     func = evas_common_gfx_func_composite_pixel_mask_span_get(src, dst, dst_clip_w, dc->render_op);
+   else if (dc->mul.use)
      func = evas_common_gfx_func_composite_pixel_color_span_get(src, dc->mul.col, dst, dst_clip_w, dc->render_op);
    else
      func = evas_common_gfx_func_composite_pixel_span_get(src, dst, dst_clip_w, dc->render_op);

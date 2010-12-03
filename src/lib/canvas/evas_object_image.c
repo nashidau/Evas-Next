@@ -2053,6 +2053,9 @@ evas_object_image_content_hint_set(Evas_Object *obj, Evas_Image_Content_Hint hin
  * Note there is little point in using a image as alpha mask unless it has an
  * alpha channel.
  *
+ * After an image has been set as an alpha mask, it cannot be used as a normal
+ * image.
+ *
  * @param obj Object to use as an alpha mask.
  * @param ismask Use image as alphamask, must be true.
  */
@@ -2071,10 +2074,9 @@ evas_object_image_alpha_mask_set(Evas_Object *obj, Eina_Bool ismask)
    return;
    MAGIC_CHECK_END();
 
-   /* Convert to A8 if not already */
-
-   /* done */
-
+   obj->layer->evas->engine.func->image_mask_create(
+      obj->layer->evas->engine.data.output,
+      o->engine_data);
 }
 
 /**

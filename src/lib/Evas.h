@@ -886,6 +886,7 @@ typedef void      (*Evas_Async_Events_Put_Cb)(void *target, Evas_Callback_Type t
    EAPI Evas_Object      *evas_object_clip_get              (const Evas_Object *obj) EINA_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1) EINA_PURE;
    EAPI void              evas_object_clip_unset            (Evas_Object *obj);
    EAPI const Eina_List  *evas_object_clipees_get           (const Evas_Object *obj) EINA_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1) EINA_PURE;
+   EAPI void              evas_object_mask_set              (Evas_Object *obj, Evas_Object *mask) EINA_ARG_NONNULL(1, 2);
 
    EAPI void              evas_object_focus_set             (Evas_Object *obj, Eina_Bool focus) EINA_ARG_NONNULL(1);
    EAPI Eina_Bool         evas_object_focus_get             (const Evas_Object *obj) EINA_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1) EINA_PURE;

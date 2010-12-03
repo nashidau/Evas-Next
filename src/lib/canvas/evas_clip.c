@@ -431,6 +431,31 @@ evas_object_clipees_get(const Evas_Object *obj)
    return obj->clip.clipees;
 }
 
+
+EAPI void
+evas_object_mask_set(Evas_Object *obj, Evas_Object *mask)
+{
+   MAGIC_CHECK(obj, Evas_Object, MAGIC_OBJ);
+   return;
+   MAGIC_CHECK_END();
+   if (!mask)
+     {
+	//evas_object_clip_unset(obj);
+	return;
+     }
+   MAGIC_CHECK(mask, Evas_Object, MAGIC_OBJ);
+   return;
+   MAGIC_CHECK_END();
+   if (obj->cur.mask == mask) return;
+   if (obj == mask) return;
+
+   obj->cur.mask = mask;
+
+   evas_object_clip_set(obj, mask);
+}
+
+
+
 /**
  * @}
  */
