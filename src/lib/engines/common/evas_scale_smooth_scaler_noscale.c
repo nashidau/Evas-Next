@@ -8,7 +8,6 @@
 #endif
 
    ptr = src->image.data + ((dst_clip_y - dst_region_y + src_region_y) * src_w) + (dst_clip_x - dst_region_x) + src_region_x;
-   printf("Drawing with mask %p\n",dc->mask.mask);
    if (dc->mask.mask)
      {
 	func = evas_common_gfx_func_composite_pixel_mask_span_get(NULL, NULL, dst_clip_w, dc->render_op);
