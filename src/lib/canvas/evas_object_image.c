@@ -2045,41 +2045,6 @@ evas_object_image_content_hint_set(Evas_Object *obj, Evas_Image_Content_Hint hin
 }
 
 /**
- * Enable an image to be used as an alpha mask.
- *
- * This will set any flags, and discard any excess image data not used as an
- * alpha mask.
- *
- * Note there is little point in using a image as alpha mask unless it has an
- * alpha channel.
- *
- * After an image has been set as an alpha mask, it cannot be used as a normal
- * image.
- *
- * @param obj Object to use as an alpha mask.
- * @param ismask Use image as alphamask, must be true.
- */
-EAPI void
-evas_object_image_alpha_mask_set(Evas_Object *obj, Eina_Bool ismask)
-{
-   Evas_Object_Image *o;
-
-   if (!ismask) return;
-
-   MAGIC_CHECK(obj, Evas_Object, MAGIC_OBJ);
-   return;
-   MAGIC_CHECK_END();
-   o = (Evas_Object_Image *)(obj->object_data);
-   MAGIC_CHECK(o, Evas_Object_Image, MAGIC_OBJ_IMAGE);
-   return;
-   MAGIC_CHECK_END();
-
-   obj->layer->evas->engine.func->image_mask_create(
-      obj->layer->evas->engine.data.output,
-      o->engine_data);
-}
-
-/**
  * Get the content hint of a given image of the canvas.
  *
  * @param obj The given canvas pointer.
