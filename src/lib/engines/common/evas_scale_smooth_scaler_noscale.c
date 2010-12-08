@@ -22,7 +22,7 @@
    if (mask)
      {
      //   mask += src_region_x - dc->mask.x;
-       // mask += (src_region_y - dc->mask.y) * maskobj->cache_entry.w;
+        mask += (src_region_y - dc->mask.y) * maskobj->cache_entry.w;
         while (dst_clip_h--)
           {
 
