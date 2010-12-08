@@ -2406,7 +2406,10 @@ _proxy_subrender(Evas *e, Evas_Object *source)
                                     -source->cur.geometry.x,
                                     -source->cur.geometry.y);
      }
+
    e->engine.func->context_free(e->engine.data.output, ctx);
+   source->proxy.surface = e->engine.func->image_dirty_region(
+               e->engine.data.output, source->proxy.surface, 0,0,w,h);
 
 }
 
@@ -2967,6 +2970,7 @@ evas_object_image_render_pre(Evas_Object *obj)
    if (o->cur.source && o->cur.source->proxy.redraw)
      {
         /* XXX: Do I need to sort out the map here? */
+        obj->changed = 1;
         evas_add_rect(&e->clip_changes,
                       obj->cur.geometry.x, obj->cur.geometry.y,
                       obj->cur.geometry.w, obj->cur.geometry.h);
