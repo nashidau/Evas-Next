@@ -3524,14 +3524,7 @@ evas_object_image_filled_resize_listener(void *data __UNUSED__, Evas *e __UNUSED
    Evas_Object_Image *o;
 
    o = obj->object_data;
-   if (o->cur.source)
-     {
-        /* It's a proxy */
-        evas_object_geometry_get(o->cur.source, NULL, NULL, &w, &h);
-        printf("resize: %d %d\n",w,h);
-     }
-   else
-      evas_object_geometry_get(obj, NULL, NULL, &w, &h);
+   evas_object_geometry_get(obj, NULL, NULL, &w, &h);
    evas_object_image_fill_set(obj, 0, 0, w, h);
 }
 
