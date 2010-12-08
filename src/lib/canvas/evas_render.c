@@ -208,6 +208,7 @@ _evas_render_phase1_direct(Evas *e,
              obj->func->render_pre(obj);
              if (obj->proxy.proxies)
                {
+                  RD("      has proxies:\n");
                   obj->proxy.redraw = 1;
                   EINA_LIST_FOREACH(obj->proxy.proxies, l, proxy)
                      proxy->func->render_pre(proxy);
