@@ -2348,16 +2348,23 @@ _proxy_error(Evas_Object *proxy, void *context, void *output, void *surface,
 static void
 _proxy_subrender_recurse(Evas_Object *obj, void *output, void *surface, void *ctx, int x, int y){
      Evas_Object *obj2;
-   if (obj->smart.smart)
-     {
-        EINA_INLIST_FOREACH(evas_object_smart_members_get_direct(obj), obj2){
-           _proxy_subrender_recurse(obj2, output, surface, ctx, x,y);
-        }
-     }
-   else
-     {
-        obj->func->render(obj, output, ctx, surface,x,y);
-     }
+     Evas *e;
+     e = obj->layer->evas;
+     if (obj->clip.clipees) return;
+     if (!evas_object_is_visible(obj)) return;
+     obj->pre_render_done = 1;
+     ctx = e->engine.func->context_new(output);
+     if (obj->smart.smart)
+       {
+          EINA_INLIST_FOREACH(evas_object_smart_members_get_direct(obj), obj2){
+               _proxy_subrender_recurse(obj2, output, surface, ctx, x,y);
+          }
+       }
+     else
+       {
+          obj->func->render(obj, output, ctx, surface,x,y);
+       }
+     e->engine.func->context_free(output, ctx);
 }
 
 
