@@ -2345,6 +2345,23 @@ _proxy_error(Evas_Object *proxy, void *context, void *output, void *surface,
         return;
 }
 
+static void
+_proxy_subrender_recurse(Evas_Object *obj, void *output, void *surface, void *ctx, int x, int y){
+     Evas_Object *obj2;
+   if (obj->smart.smart)
+     {
+        EINA_INLIST_FOREACH(evas_object_smart_members_get_direct(obj), obj2){
+           _proxy_subrender_recurse(obj2, output, surface, ctx, x,y);
+        }
+     }
+   else
+     {
+        obj->func->render(obj, output, ctx, surface,x,y);
+     }
+}
+
+
+
 /**
  * Render the source object when a proxy is set.
  *
@@ -2393,10 +2410,11 @@ _proxy_subrender(Evas *e, Evas_Object *source)
    if (source->smart.smart)
      {
         EINA_INLIST_FOREACH(evas_object_smart_members_get_direct(source), obj2){
-           obj2->func->render(obj2, e->engine.data.output, ctx,
-                              source->proxy.surface,
-                              -source->cur.geometry.x,
-                              -source->cur.geometry.y);
+             _proxy_subrender_recurse(obj2, e->engine.data.output,
+                                      source->proxy.surface,
+                                      ctx,
+                                      -source->cur.geometry.x,
+                                      -source->cur.geometry.y);
         }
      }
    else
@@ -2412,7 +2430,6 @@ _proxy_subrender(Evas *e, Evas_Object *source)
                e->engine.data.output, source->proxy.surface, 0,0,w,h);
 
 }
-
 
 static void
 evas_object_image_unload(Evas_Object *obj, Eina_Bool dirty)
@@ -2584,6 +2601,7 @@ evas_object_image_new(void)
    o->cur.cspace = EVAS_COLORSPACE_ARGB8888;
    o->cur.spread = EVAS_TEXTURE_REPEAT;
    o->cur.opaque_valid = 0;
+   o->cur.source = NULL;
    o->prev = o->cur;
    return o;
 }
@@ -2661,6 +2679,11 @@ evas_object_image_render(Evas_Object *obj, void *output, void *context, void *su
 
    obj->layer->evas->engine.func->context_render_op_set(output, context,
 							obj->cur.render_op);
+
+   if (0)
+        printf("Proxy: %p Source: %p Surface %p Redraw %s Type %s\n",obj,
+               o->cur.source,o->cur.source->proxy.surface,
+               o->cur.source->proxy.redraw?"yep":"nope",o->cur.source->type);
 
    if (!o->cur.source)
      {
