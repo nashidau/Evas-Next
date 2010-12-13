@@ -167,10 +167,14 @@ evas_object_text_font_source_get(const Evas_Object *obj)
 }
 
 /**
- * To be documented.
+ * Set the font and the font size for a given text object.
  *
- * FIXME: To be fixed.
+ * If both font is NULL & size is 0, this function does nothing.  Otherwise
+ * setting a NULL font or a 0 size leaves that property unchanged.
  *
+ * @param obj Text object to adjust.
+ * @param font Font to set, or NULL.
+ * @param size Size to set of 0.
  */
 EAPI void
 evas_object_text_font_set(Evas_Object *obj, const char *font, Evas_Font_Size size)
@@ -180,7 +184,7 @@ evas_object_text_font_set(Evas_Object *obj, const char *font, Evas_Font_Size siz
    int is, was = 0, pass = 0;
    int same_font = 0;
 
-   if ((!font) || (size <= 0)) return;
+   if ((!font) && (size <= 0)) return;
    MAGIC_CHECK(obj, Evas_Object, MAGIC_OBJ);
    return;
    MAGIC_CHECK_END();
@@ -189,7 +193,11 @@ evas_object_text_font_set(Evas_Object *obj, const char *font, Evas_Font_Size siz
    return;
    MAGIC_CHECK_END();
 
-   if ((o->cur.font) && (font) && (!strcmp(o->cur.font, font)))
+   if (!font) font = o->cur.font;
+   if (size <= 0) size = o->cur.size;
+
+   if ((o->cur.font) && (font) &&
+		   ((font == o->cur.font) || !strcmp(o->cur.font, font)))
      {
 	same_font = 1;
 	if (size == o->cur.size) return;
