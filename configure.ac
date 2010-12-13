@@ -1087,7 +1087,7 @@ AC_ARG_ENABLE(cpu-neon,
   ],
   [
     if test "x$build_cpu_neon" = "xyes" ; then
-       AC_TRY_COMPILE([#include <arm_neon.h>],
+       AC_TRY_COMPILE([],
         [asm volatile ("vqadd.u8 d0, d1, d0\n")],
         [
           AC_MSG_RESULT(yes)
