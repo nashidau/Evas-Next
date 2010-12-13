@@ -2342,7 +2342,7 @@ _proxy_error(Evas_Object *proxy, void *context, void *output, void *surface,
                                                       proxy->cur.geometry.y + y,
                                                       proxy->cur.geometry.w,
                                                       proxy->cur.geometry.h);
-        return;
+   return;
 }
 
 static void
@@ -2687,7 +2687,7 @@ evas_object_image_render(Evas_Object *obj, void *output, void *context, void *su
    obj->layer->evas->engine.func->context_render_op_set(output, context,
 							obj->cur.render_op);
 
-   if (0)
+   if (0)// o->cur.source)
         printf("Proxy: %p Source: %p Surface %p Redraw %s Type %s\n",obj,
                o->cur.source,o->cur.source->proxy.surface,
                o->cur.source->proxy.redraw?"yep":"nope",o->cur.source->type);
