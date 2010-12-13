@@ -234,7 +234,7 @@ evas_object_text_font_set(Evas_Object *obj, const char *font, Evas_Font_Size siz
      }
    o->cur.size = size;
    o->engine_data = evas_font_load(obj->layer->evas, o->cur.font, o->cur.source,
-				   (int)(((double)o->cur.size) * obj->cur.scale));
+				   o->cur.size * obj->cur.scale);
    evas_text_style_pad_get(o->cur.style, &l, &r, &t, &b);
    if ((o->engine_data) && (o->cur.text))
      {
