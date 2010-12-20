@@ -1798,9 +1798,9 @@ again:
         ty2 = ((double)(tex->y) + sy + sh) / (double)tex->pt->h;
 
         txm1 = (texm->x + sxm) / (double)texm->pt->w;
-        tym1 = (texm->y + sy) / (double)texm->pt->h;
+        tym1 = (texm->y + sym) / (double)texm->pt->h;
         txm2 = (texm->x + sxm + swm) / (double)texm->pt->w;
-        tym2 = (texm->y + sy + sh) / (double)texm->pt->h;
+        tym2 = (texm->y + sym + shm) / (double)texm->pt->h;
      }
   printf(" %3.6lf %3.6lf %3.6lf %3.6lf\n",sx,sy,sw,sh);
   printf("m%3.6lf %3.6lf %3.6lf %3.6lf\n",sxm,sym,swm,shm);
