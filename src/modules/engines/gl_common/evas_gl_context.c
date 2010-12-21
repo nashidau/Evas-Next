@@ -1791,7 +1791,6 @@ again:
      }
    else
      {
-	     printf("B:\n");
         tx1 = ((double)(tex->x) + sx) / (double)tex->pt->w;
         ty1 = ((double)(tex->y) + sy) / (double)tex->pt->h;
         tx2 = ((double)(tex->x) + sx + sw) / (double)tex->pt->w;
@@ -1802,10 +1801,10 @@ again:
         txm2 = (texm->x + sxm + swm) / (double)texm->pt->w;
         tym2 = (texm->y + sym + shm) / (double)texm->pt->h;
      }
-  printf(" %3.6lf %3.6lf %3.6lf %3.6lf\n",sx,sy,sw,sh);
-  printf("m%3.6lf %3.6lf %3.6lf %3.6lf\n",sxm,sym,swm,shm);
-  printf(" %3f %3f %3f %3f\n",tx1,ty1,tx2,ty2);
-  printf("m%3f %3f %3f %3f\n",txm1,tym1,txm2,tym2);
+ // printf(" %3.6lf %3.6lf %3.6lf %3.6lf\n",sx,sy,sw,sh);
+ //  printf("m%3.6lf %3.6lf %3.6lf %3.6lf\n",sxm,sym,swm,shm);
+ // printf(" %3f %3f %3f %3f\n",tx1,ty1,tx2,ty2);
+ // printf("m%3f %3f %3f %3f\n",txm1,tym1,txm2,tym2);
 
    PUSH_VERTEX(pn, x    , y    , 0);
    PUSH_VERTEX(pn, x + w, y    , 0);
